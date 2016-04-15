@@ -7,9 +7,10 @@ if(isset($_SESSION["time"])){
 	session_unset(); 
 	session_destroy(); 
 	
-} else{
-
 }
+
+require_once('database.php');
+
 ?>
 
 <!DOCTYPE  html>
@@ -39,14 +40,9 @@ if(isset($_SESSION["time"])){
 		$user=filter_var($_POST['user'],FILTER_SANITIZE_STRING);
 		$pass=filter_var(md5($_POST['pass']),FILTER_SANITIZE_STRING);
 
-		$user1= 'ct310';
-		$pass1 = '63009f7c847ffbccb9422954b6c121b6';
-		$user2 = 'salman';
-		$pass2 = '5d41402abc4b2a76b9719d911017c592';
-		$user3 = 'apaswate';
-		$pass3 = '650cf75d8e46fd0a4f3e1d2e8967aa98';
+		$db = new Database();
 
- 		if((($user == $user1 ) && ($pass == $pass1)) || (($user == $user2) && ($pass == $pass2)) || (($user == $user3) && ($pass == $pass3))){
+ 		if($pass === $db->getHashByName($user)) {
 			echo " That is valid username and password for CT310";
 			$_SESSION["time"] = date("h:i:sa");
 			$_SESSION["user"] = $user;
