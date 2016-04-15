@@ -1,8 +1,3 @@
-<?php
-	//session_start();
-?>
-<!DOCTYPE html>
-<html lang="en-US">
 <div id = "head">
 <h3>Salman and Austin's Pet Rescue</h3>
 
