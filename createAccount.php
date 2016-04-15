@@ -7,9 +7,19 @@ if(isset($_SESSION["time"])){
 	session_unset(); 
 	session_destroy(); 
 	
-} else{
+} 
 
+$whitelist = array('129.82.46', '129.82.45', '129.82.44');
+
+//129.82.44.* and 129.82.45.
+
+// check for correct ip
+$ip = $_SERVER['REMOTE_ADDR'];
+$ip = substr($ip, 0, 9);
+if (!in_array($ip, $whitelist)){
+	header("Location: index.php"); 
 }
+
 ?>
 
 <!DOCTYPE  html>
@@ -58,8 +68,16 @@ if(isset($_SESSION["time"])){
 	</form>
 
 	<?php
+
+	//if(!empty ($_POST['user'])  && !empty($_POST['pass'])){
+	//	$user=filter_var($_POST['user'],FILTER_SANITIZE_STRING);
 	// checks for required values 
-		if (!isset(firstName)){ echo "First Name Required";}
+		if (!empty($POST['firstName'])){ 
+			$firstName=filter_var($_POST['firstName'],FILTER_SANITIZE_STRING);
+		}else {
+			echo "First Name Required";
+		}
+		/*
 		if (!isset(lastName)){ echo "Last Name Required";}
 		if (!isset(email)){ echo "Email Required";}
 		if (!isset(username)){ echo "Username Required";}
@@ -70,6 +88,7 @@ if(isset($_SESSION["time"])){
 		if (!isset(turtle)){ echo "Please answer weither you have owned a turtle in the past";}
 		if (!isset(petFos)){ echo "Please answer weither you are interested in fostering a pet";}
 		if (!isset(needHome)){ echo "Please answer weither you have a pet that needs a home";}
+		*/
 	?>
 </div>
 <div id = "footer">
