@@ -110,28 +110,37 @@ h4 {
 
 
 a:link {
-    color: #04BFBF;
     text-decoration: none;
+    color: #04BFBF;
 }
 
 /* visited link */
 a:visited {
-    color: #04BFBF;
     text-decoration: none;
+    color: #04BFBF;
 }
 
 /* mouse over link */
 a:hover {
-    color: #04BFBF;
     text-decoration: underline;
+    color: #04BFBF;
 }
 
 /* selected link */
 a:active {
-    color: #04BFBF;
     text-decoration: none;
+    color: #04BFBF;
 }
 
+#loginLinks {
+    text-align: center;
+    padding-bottom: 10px;
+
+}
+
+a.login {
+    color: #3D8F27;
+}
 
 
 
