@@ -59,6 +59,7 @@ require_once('database.php');
 	?>
 
 	<a href="forgotPassword.php"> Forgot Password</a>
+	<a href="createAccount.php"> Create Account</a>
 
 </div>
 <div id = "footer">

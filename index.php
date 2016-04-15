@@ -23,8 +23,6 @@
 	Phasellus blandit vel orci congue posuere. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id porta ligula. In in massa tellus. Pellentesque ut lacus nisi. Mauris malesuada ipsum ac turpis rutrum, id tempus nunc vestibulum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nulla ornare augue eu tellus efficitur, quis malesuada lorem finibus. Morbi non efficitur quam. Vestibulum eu sem in nulla lacinia hendrerit.
 	</p>
 
-	<a href="createAccount.php">create account</a>
-	<a href="PetForAdoption.php">Pet for adoption</a>
 </div>
 
 <div id = "footer">
