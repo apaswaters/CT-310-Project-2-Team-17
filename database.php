@@ -17,5 +17,36 @@ class Database extends PDO {
 		foreach($results as $row)
 			return $row['password'];
 	}
+
+	function getEmailByName($user_name)
+	{
+		$sql = "SELECT email FROM users WHERE user_name='$user_name'";
+
+		$results = $this->query($sql);
+
+		foreach($results as $row)
+			return $row['email'];
+	}
+
+	function getUsers() {
+		$sql = "SELECT * FROM users;";
+
+		$results = $this->query($sql);
+
+		$out = Array();
+
+		foreach($results as $row)
+		{
+			$out [] = $row['user_name'];
+		}
+
+		return $out;
+	}
+
+	function setPass($user_name, $hash) {
+		$sql = "UPDATE users SET password='$hash' WHERE user_name='$user_name'";
+
+		$results = $this->query($sql);
+	}
 }
 ?>
