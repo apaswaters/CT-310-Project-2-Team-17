@@ -61,6 +61,9 @@ if(isset($_SESSION["time"])){
 	}
 
 	?>
+
+	<a href="forgotPassword.php"> Forgot Password</a>
+
 </div>
 <div id = "footer">
 	<?php
