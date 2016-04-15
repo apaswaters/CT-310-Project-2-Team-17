@@ -5,7 +5,9 @@ session_start();
 
 if(!isset($_SESSION["time"])){ 
 	header("Location: login.php");
-} 
+}
+
+require_once("database.php");
 
 ?>
 
@@ -37,9 +39,12 @@ if(!isset($_SESSION["time"])){
 
 	<?php
 	if (isset($_POST['hidden'])){
+
+		$problem = FALSE;
 		// checks for if info is set
 		if (empty($_POST["short"])){
 			echo "Short text Missing!";
+			$problem = TRUE;
 		}else{
 			$shortText = filter_var($_POST['short'],FILTER_SANITIZE_STRING);
 									//Where you can add to database
@@ -47,6 +52,7 @@ if(!isset($_SESSION["time"])){
 
 		if (empty($_POST["long"])){
 			echo "Long text Missing!";
+			$problem = TRUE;
 		}else{
 			$longText = filter_var($_POST['long'],FILTER_SANITIZE_STRING);
 									//Where you can add to database
@@ -54,17 +60,19 @@ if(!isset($_SESSION["time"])){
 
 		if (empty($_POST["weight"])){
 			echo "Weight Missing!";
+			$problem = TRUE;
 		}else{
 			$weight = filter_var($_POST['weight'],FILTER_SANITIZE_STRING);
 									//Where you can add to database
 		}
 
 		// image checks
-		if (isset($_FILES["image"])){
+		$db = new Database();
+		$fid;
+		if (!$problem && $_FILES && isset($_FILES["image"])){
 			$target_dir = "uploads/";
-			$target_file = $target_dir . basename($_FILES["image"]["name"]);
 			$uploadOk = 1;
-			$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+			$imageFileType = parseFileSuffix($_FILES['image']['type']);
 			// Check if image file is a actual image or fake image
 			if(isset($_POST["submit"])) {
     			$check = getimagesize($_FILES["image"]["tmp_name"]);
@@ -76,37 +84,69 @@ if(!isset($_SESSION["time"])){
         			$uploadOk = 0;
     			}
 			}
-			// Check if file already exists
-			if (file_exists($target_file)) {
-    			echo "Sorry, file already exists.";
-    			$uploadOk = 0;
-			}
 			// Check file size
 			if ($_FILES["image"]["size"] > 500000) {
     			echo "Sorry, your file is too large.";
     			$uploadOk = 0;
 			}
 			// Allow certain file formats
-			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" ) {
+			if($imageFileType === '') {
     			echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
     			$uploadOk = 0;
 			}
 			// Check if $uploadOk is set to 0 by an error
 			if ($uploadOk == 0) {
     			echo "Sorry, your file was not uploaded.";
+			$problem = TRUE;
 			// if everything is ok, try to upload file
 			} else {
-    			if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+			$fid = $db->saveImage($_FILES["image"], $imageFileType);
+			$target_file = str_pad($fid, 5, "0", STR_PAD_LEFT).".".$imageFileType;
+    			if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_dir.$target_file)) {
         			echo "The file ". basename( $_FILES["image"]["name"]). " has been uploaded.";
     			} else {
         			echo "Sorry, there was an error uploading your file.";
+				$problem = TRUE;
     			}
 			}
+		}
+		if(!$problem)
+		{
+			$db->insertPet(
+				$fid,
+				$weight,
+				$shortText,
+				$longText
+			);
 		}
 	}
 	?>
 </div>
 <div id = "footer">
+
+	<?php
+	function parseFileSuffix($iType)
+	{
+		if($iType === 'image/jpeg')
+		{
+			return 'jpg';
+		}
+		if($iType === 'image/gif')
+		{
+			return 'gif';
+		}
+		if($iType === 'image/png')
+		{
+			return 'png';
+		}
+		if($iType === 'image/tif')
+		{
+			return 'tif';
+		}
+		return '';
+	}
+	?>
+
 	<?php
   	include "Footer.inc";
     ?>
