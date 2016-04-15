@@ -1,7 +1,7 @@
 <?php
 class Database extends PDO {
 	public function __construct() {
-		parent::__construct("sqlite".__DIR__."/MyDatabase.db");
+		parent::__construct("sqlite:./MyDatabase.db");
 	}
 
 	function getNumberOfPets() {
@@ -9,6 +9,13 @@ class Database extends PDO {
 		return $pet_num->fetchColumn();
 	}
 
-	
+	function getHashByName($user_name) {
+		$sql = "SELECT password FROM users WHERE user_name='$user_name'";
+
+		$results = $this->query($sql);
+
+		foreach($results as $row)
+			return $row['password'];
+	}
 }
 ?>
