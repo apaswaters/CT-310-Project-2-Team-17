@@ -1,6 +1,5 @@
 <div id = "head">
-<h3>Salman and Austin's Pet Rescue</h3>
-
+<h3>Jeremy and Austin's Pet Rescue</h3>
   <a href="index.php">Home</a>
   <a href="Pets_List.php">Pets List</a>
   <a href="About_Us.php">About Us</a>
@@ -15,4 +14,5 @@
 	<?php
   }
   ?>
+  <a href="PetForAdoption.php">Add a Pet</a>
 </div>
