@@ -17,43 +17,35 @@
 		<form role="form" method="post">
  			<input type="text" class="form-control" id="keyword" placeholder="Search Here">
  		</form>
+		<p id="debug"></p>
  		<ul id="content"></ul>
     	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     	<script type="text/javascript">
  		$(document).ready(function() {
  			$('#keyword').on('input', function() {
  				var searchKey = $(this).val();
- 				if (searchKey.length >= 3) {
- 					$.post('search.php', { keywords: searchKey }, function(data) {
- 						$('ul#content').empty()
- 						$.each(data, function() {
- 							$('ul#content').append('<li><a href="Pets_List.php?id=' + this.id + '">' + this.title + '</a></li>');
- 						});
- 					}, "json");
+ 				if (searchKey.length >= 0) {
+ 					$.ajax({
+						type: "POST",
+						url: "search.php",
+						data: "{keywords: '" + searchKey + "'}",
+						dataType: "json",
+						async: "true",
+						cache: "false",
+						success: function(data) {
+							$('ul#content').empty();
+ 							$('ul#content').html(
+ 							$.each(data, function() {
+ 								$('ul#content').append('<li><a href="petPage.php?r=' + this.id + '"><img src=getImage.php?id=' + this.image  + '/></a><p>' + this.short + '</p></li>');
+ 								}));
+ 							},
+						Error: function(xhr, status, error) {
+							}
+						});
  				}
  			});
  		});
  		</script>
-  
-			<h1>Pinky</h1>
-			<a href="Pinky.php"><img src="Pinky_gallery.jpg" alt="Smiley face" width="300" height="300" align="middle"> 
-			<div id="caption">
-				<a href="http://colliesheltierescue.org/"> "Image from Rocky Mountain Collie and Sheltie Rescue"</a>
-			</div>
-
-
-			<h1>Muff</h1>
-			<a href="Muff.php"><img src="Mutt_SQ.jpg" alt="Smiley face" width="300" height="300" align="middle"> 
-			<div id ="caption">
-				<a href="http://colliesheltierescue.org/"> "Image from Rocky Mountain Collie and Sheltie Rescue"</a>
-			</div>
-    
-			<h1>Jeff</h1>
-			<a href="Jeff.php"><img src="Jeff_sq.jpg" alt="Smiley face" width="300" height="300" align="middle"> 
-			<div id ="caption">
-				<a href="http://colliesheltierescue.org/"> "Image from Rocky Mountain Collie and Sheltie Rescue"</a>
-			</div>
-  
 	</div>
 
 	<div id = "footer">
